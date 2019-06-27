@@ -58,6 +58,6 @@ public class LeeCodeQue {
 
     @Test
     public void lengthOfLongestSubstringMT(){
-        System.out.println( lengthOfLongestSubstring("pwwkew"));
+        System.out.println( lengthOfLongestSubstring("wwkew"));
     }
 }
