@@ -10,23 +10,15 @@ public class CustomException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
     private String msg;
-    private int code = 500;
+    private int code = 1000;
 
-    /**
-     * Constructs a new runtime exception with {@code null} as its
-     * detail message.  The cause is not initialized, and may subsequently be
-     * initialized by a call to {@link #initCause}.
-     */
     public CustomException(String msg) {
+        this.msg = super.getMessage();
         this.msg = msg;
     }
 
-    /**
-     * Constructs a new runtime exception with {@code null} as its
-     * detail message.  The cause is not initialized, and may subsequently be
-     * initialized by a call to {@link #initCause}.
-     */
     public CustomException(String msg, int code) {
+        this.msg = super.getMessage();
         this.msg = msg;
         this.code = code;
     }

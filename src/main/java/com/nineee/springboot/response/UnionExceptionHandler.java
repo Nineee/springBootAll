@@ -3,11 +3,15 @@ package com.nineee.springboot.response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author: ljj
@@ -39,17 +43,25 @@ public class UnionExceptionHandler {
     }
     /**
      * Description : 全局异常捕捉处理
-     * Group :
-     *
      * @author ljj
-     * @date  2019/4/1 0001 10:34
+     * @date  2019/6/22 10:34
      * @param e
-     * @return
      */
     @ExceptionHandler(Exception.class)
-    public Result apiExceptionHandler(CustomException e) {
-        log.error(">>>>> 异常抛出：{}", e.getMsg());
-        return new Result(e.getMsg());
+    public Map apiExceptionHandler(Exception e) {
+        log.error(">>>>> 系统异常：{}", e.getMessage());
+        Map map = new HashMap();
+        map.put("code", 1000);
+        map.put("msg", e.getLocalizedMessage());
+        map.put("data",null);
+        if(e instanceof CustomException){
+            e = (CustomException)e;
+            log.error(">>>>> 自定义异常：{}", ((CustomException) e).getMsg());
+            map.put("code", 1000);
+            map.put("msg", ((CustomException) e).getMsg());
+            map.put("data",null);
+        }
+        return map;
     }
 
 }

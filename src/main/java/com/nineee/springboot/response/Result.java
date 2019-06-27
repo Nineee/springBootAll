@@ -5,11 +5,11 @@ package com.nineee.springboot.response;
  * @Date: 2019/6/18 14:48
  * @Desc
  */
-public class Result<T>{
+public class Result<T> {
     private static final long serialVersionUID = 1L;
 
     private String msg;
-    private int code = 500;
+    private int code = 1000;
     /** 具体的内容. */
     private T data;
 
