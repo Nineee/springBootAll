@@ -19,7 +19,7 @@ public class LeeCodeQue {
      * 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
      * */
     public int lengthOfLongestSubstring(String s) {
-        int result = 0;
+        ArrayList<Integer> ret = new ArrayList<>();
         HashMap<Integer, String> mapOld = new HashMap<>();
         if(s.equals("")){
             return 0;
@@ -27,37 +27,45 @@ public class LeeCodeQue {
         if(s.equals(" ") || s.length()==1){
             return 1;
         }
-        for(int i=0;i<s.length();i++){
-            char c = s.charAt(i);
-            if(i==0){
-                mapOld.put(i,String.valueOf(c));
-                result = 1;
+
+        for(int i=0;i<s.length();i++) {
+            String before = String.valueOf(s.charAt(i));
+            for (int j = i + 1; j < s.length(); j++) {
+                String current = String.valueOf(s.charAt(j));
+                if (i == 0) {
+                    mapOld.put(i, current);
+                } else {
+                    before = String.valueOf(s.charAt(i - 1));
+                }
+                if (i > 0 && !current.equals(before) && !mapOld.containsValue(current)) {
+                    mapOld.put(i, current);
+                } else {
+                    if (i > 0 && current.equals(before)) {
+                        mapOld.clear();
+                        mapOld.put(i, current);
+                        continue;
+                    }
+                    if (i > 0 && mapOld.containsValue(current) && current.equals(before)) {
+                        mapOld.clear();
+                        continue;
+                    }
+                    if (i > 0 && mapOld.containsValue(current) && !current.equals(before)) {
+                        mapOld.clear();
+                        mapOld.put(i - 1, before);
+                        mapOld.put(i, current);
+                        continue;
+                    }
+                }
+                ret.add(mapOld.size());
             }
-            if(i>0&&!String.valueOf(c).equals(s.charAt(i-1))){
-                result = result +  1;
-                mapOld.put(i,String.valueOf(c));
-            }
+            Collections.sort(ret);
+
         }
-        return mapOld.size();
-      /*  int key = 0;
-        int value = 0;
-        int flagKey = 0;
-        int flagValue = 0;
-        Set<Map.Entry<Integer, Integer>> entries = mapResult.entrySet();
-        for(Map.Entry entry :entries){
-            key = Integer.valueOf(entry.getKey().toString());
-            value = Integer.valueOf(entry.getValue().toString());
-            if(flagValue < value ) {
-                flagKey  = key;
-                flagValue = value;
-            }
-        }
-        return flagValue;
-*/
+        return ret.get(ret.size() - 1);
     }
 
     @Test
     public void lengthOfLongestSubstringMT(){
-        System.out.println( lengthOfLongestSubstring("wwkew"));
+        System.out.println(lengthOfLongestSubstring("abcabcbb"));
     }
 }
