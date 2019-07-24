@@ -5,7 +5,7 @@ package com.nineee.springboot.service;
  * @Date: 2019/6/26 14:45
  * @Desc
  */
-public interface  TestService {
+public interface  TestService  extends TestAll{
     void testMethod();
 
 }
